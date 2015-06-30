@@ -184,4 +184,36 @@ public class MathProblems {
           
           return num;
       }
+      
+      public String ExcelSheetColumnTitle(int n) {
+          StringBuilder title = new StringBuilder();
+          while(n>0){
+        	  //因为26进制里最小对应的是10进制里面的1，不是0, 所以以下要用（n-1）
+              char c = (char) ((n-1)%26 + 'A');
+              title.append(c);
+              n = (n-1)/26;
+          }
+          title.reverse();
+          return title.toString();
+      }
+      
+      public int ExcelSheetColumnNumber(String s) {
+          int num = 0;
+          for(char c : s.toCharArray()){
+              num = num*26 + (c - 'A' + 1);
+          }
+          
+          return num;
+      }
+
+      public int FactorialTrailingZeroes(int n) {
+          int count = 0;
+          if(n<=0) return 0;
+          //use long to define i to avoid possible overflow
+          for(long i=5; n/i>0; i*=5){
+              count += n/i;
+          }
+          
+          return count;
+      }
 }
