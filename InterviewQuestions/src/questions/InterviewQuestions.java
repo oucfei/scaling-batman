@@ -1,6 +1,7 @@
 package questions;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -11,8 +12,22 @@ public class InterviewQuestions {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		int s =MathProblems.romanToInteger("MCMXCVI");
-		System.out.print(s);
+//		char board[][] = {
+//				{'.','.','.','.','5','.','.','1','.'},
+//				{'.','4','3','.','.','.','.','.','.'},
+//				{'.','.','.','.','.','3','.','.','1'},
+//				{'8','.','.','.','.','.','.','2','.'},
+//				{'.','.','2','.','7','.','.','.','.'},
+//				{'.','1','5','.','.','.','.','.','.'},
+//				{'.','.','.','.','.','2','.','.','.'},
+//				{'.','2','.','9','.','.','.','.','.'},
+//				{'.','.','4','.','.','.','.','.','.'},
+//
+//		};
+//		boolean s =MathProblems.isValidSudoku(board);
+		//int s = ReverseInteger(-2147483648);
+		List<String> allString = RecursionQuestions.letterCombinations("23");
+		//System.out.print(s);
 		
 	}
 
@@ -344,6 +359,36 @@ public class InterviewQuestions {
         }
         return ++j;
     }
-
-
+    
+    public static int ReverseInteger(int x) {
+    //Consider overflow!!!
+        int num = 0;
+        while(x!=0){
+            int digit = x%10;
+            num = num *10 + digit;
+            x /= 10;
+            if( (num > MaxDiv10 || (num < (-1)*MaxDiv10)) && x!=0){
+                return 0;
+            }
+        }
+        
+        return num;
+    }
+    
+    public int LongestSubstringWithoutRepeatingCharacters(String s) {
+        int[] charMap = new int[256];
+        Arrays.fill(charMap, -1);
+        int max = 0;
+        int i=0;
+        for(int j=0; j<s.length(); j++){
+            if(charMap[s.charAt(j)] >= i){
+                i = charMap[s.charAt(j)] + 1;
+            }
+            
+            charMap[s.charAt(j)] = j;
+            max = Math.max(max, j-i+1);
+        }
+        
+        return max;
+    }
 }

@@ -10,7 +10,7 @@ public class BitManipulation {
     
     private static int swapBits(int n, int i, int j){
         int low = ((n>>i) & 1);
-        int high = ((n>>j)& 1);
+        int high= ((n>>j)& 1);
         
         if( (low^high) == 1 ){
             n ^= ((1<<i) | (1<<j));
