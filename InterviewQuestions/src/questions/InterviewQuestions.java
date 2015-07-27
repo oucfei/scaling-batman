@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-//The problems below should all come from Leetcode.
+import dataStructures.TreeNode;
+
+
 public class InterviewQuestions {
 
 	public static void main(String[] args) {
@@ -24,19 +26,22 @@ public class InterviewQuestions {
 //				{'.','.','4','.','.','.','.','.','.'},
 //
 //		};
-//		boolean s =MathProblems.isValidSudoku(board);
-		//int s = ReverseInteger(-2147483648);
-		List<String> allString = RecursionQuestions.letterCombinations("23");
-		//System.out.print(s);
 		
+		//System.out.println(MathProblems.divide(20,2));
+
+		//LinkedListQuestions.reorderList(n1);
+		String s = "0123456789";
+		int n = 3;
+		String res = InterviewQuestions.ZigZagConversion(s, n);
 	}
 
 
-  public class ListNode {
+  public static class ListNode {
       int val;
       ListNode next;
       ListNode(int x) { val = x; }
   }
+
   private static final int MaxDiv10 = Integer.MAX_VALUE/10;
 
   public int myAtoi(String str) {
@@ -153,14 +158,14 @@ public class InterviewQuestions {
     	}
     	col = idx - 40;
     	row = rand7();
-    	idx = col + (row-1)*7;
+    	idx = row + (col-1)*7;
     	if(idx <=60){
     		return 1 + (idx - 1)%10;
     	}
     	col = idx - 60;
     	do{
     	row = rand7();
-    	idx = col + (row-1)*7;
+    	idx = row + (col-1)*7;
     	}while(idx >20);
     	
     	return 1 + (idx - 1)%10;
@@ -390,5 +395,76 @@ public class InterviewQuestions {
         }
         
         return max;
+    }
+    
+    public static String ZigZagConversion(String s, int nRows) {  
+        if(s == null || s.length()==0 || nRows <=0)  
+            return "";  
+        if(nRows == 1)  
+            return s;
+            
+        StringBuilder res = new StringBuilder();  
+        int size = 2*nRows-2;  
+        for(int i=0;i<nRows;i++){  
+            for(int j=i;j<s.length();j+=size){  
+                res.append(s.charAt(j));  
+                if(i != 0 && i != nRows - 1){//except the first row and the last row
+                    int temp = j+size-2*i;
+                    if(temp<s.length())
+                        res.append(s.charAt(temp));
+                }
+            }                  
+        }  
+        return res.toString();  
+    }
+    
+    public ListNode SwapPairs(ListNode head) {
+        ListNode dummyHead = new ListNode(0);
+        dummyHead.next = head;
+        ListNode prev = dummyHead, p = head;
+        while(p!=null && p.next != null){
+            ListNode q = p.next, r = p.next.next;
+            prev.next = q;
+            q.next = p;
+            p.next = r;
+            prev = p;
+            p = r;
+        }
+        
+        return dummyHead.next;
+    }
+    
+    public static List<Integer> spiralMatrix(int[][] matrix){
+    	List<Integer> ret = new ArrayList<Integer>();
+    	
+    	if(matrix.length == 0){
+    		return ret;
+    	}
+    	
+    	int m = matrix.length, n = matrix[0].length;
+    	int row = 0, col = -1;
+    	while(true){
+    		for(int i=0; i<n; i++){
+    			ret.add(matrix[row][++col]);
+    		}
+    		if(--m == 0) break;
+    		
+    		for(int i=0; i<m; i++){
+    			ret.add(matrix[++row][col]);
+    		}
+    		if(--n == 0) break;
+    		
+    		for(int i=0; i<n; i++){
+    			ret.add(matrix[row][--col]);
+    		}
+    		if(--m == 0) break;
+    		
+    		for(int i=0; i<m; i++){
+    			ret.add(matrix[--row][col]);
+    		}
+    		if(--n == 0) break;
+    	}
+    	
+    	return ret;
     }
 }

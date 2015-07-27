@@ -319,4 +319,29 @@ public class MathProblems {
         visited[c-'0'-1] = true;
         return true;
     }
+    
+    public static int divide(int dividend, int divisor) {
+        if (dividend == 0)
+            return 0;
+        if (divisor == 1)
+            return dividend; //纯粹是为了防止超时
+        boolean positive = (dividend > 0 && divisor > 0) || (dividend < 0 && divisor < 0);
+        long absDividend = dividend < 0 ? 0 - (long) dividend : (long) dividend;
+        long absDivisor = divisor < 0 ? 0 - (long) divisor : (long) divisor;
+        int result = dividePositive(absDividend, absDivisor, absDivisor);
+        return positive ? result : 0 - result;
+    }
+    private static int dividePositive(long p, long q, long originalDivisor) { // p / q
+        if (p < q)
+            return 0; //这个十分必要，否则会因为p > 0而直接下一层递归，pq永远不变，死循环了就。
+        int result = 0;
+        int e = 0;
+        while (p >= q) { //等于应该也进去。
+            result += 1 << e;
+            p -= q;
+            q = q << 1;
+            e++;
+        }
+        return p > 0 ? result + dividePositive(p, originalDivisor, originalDivisor) : result;
+     }
 }
